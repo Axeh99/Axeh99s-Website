@@ -1,3 +1,5 @@
+datetime
+email_validator
 flask
 flask_bcrypt
 flask_login
