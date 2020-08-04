@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-from localhost.config import Config
+from app.localhost.config import Config
 
 
 
@@ -24,10 +24,10 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     mail.init_app(app)
 
-    from localhost.users.routes import users
-    from localhost.posts.routes import posts
-    from localhost.main.routes import main
-    from localhost.errors.handlers import errors
+    from app.localhost.users.routes import users
+    from app.localhost.posts.routes import posts
+    from app.localhost.main.routes import main
+    from app.localhost.errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
