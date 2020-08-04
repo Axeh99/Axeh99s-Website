@@ -2,9 +2,9 @@
 from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
-from localhost import db
-from localhost.models import Post
-from localhost.posts.forms import PostForm
+from app import db
+from app.models import Post
+from app.posts.forms import PostForm
 
 posts = Blueprint('posts', __name__)
 
@@ -19,7 +19,7 @@ def new_post():
         db.session.commit()
         flash('Your post haas been created!', 'success')
         return redirect(url_for('main.home'))
-    return render_template('create_post.html', title='New Post', 
+    return render_template('create_post.html', title='New Post',
                             form=form, legend='New Post')
 
 @posts.route("/post/<int:post_id>")
@@ -43,7 +43,7 @@ def update_post(post_id):
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-    return render_template('create_post.html', title='Update Post', 
+    return render_template('create_post.html', title='Update Post',
                             form=form, legend = 'Update Post')
 
 @posts.route("/post/<int:post_id>/delete", methods=['POST'])
