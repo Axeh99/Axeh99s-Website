@@ -1,1 +1,16 @@
+datetime
+flask
+flask_bcrypt
+flask_login
+flask_mail
+flask_wtf
+flask_sqlalchemy
 gunicorn
+itsdangerous
+os
+wtforms
+
+
+
+
+
