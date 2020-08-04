@@ -1,4 +1,4 @@
-from localhost import create_app
+from app.localhost import create_app
 
 app = create_app()
 
