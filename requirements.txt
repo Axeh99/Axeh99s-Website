@@ -8,4 +8,5 @@ flask_wtf
 gunicorn
 itsdangerous
 Pillow
+python-dotenv
 wtforms
