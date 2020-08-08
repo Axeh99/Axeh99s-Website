@@ -1,9 +1,10 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-from app.config import Config
+from flask_sqlalchemy import SQLAlchemy
+
+from .config import Config
 
 
 db = SQLAlchemy()
@@ -23,6 +24,7 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     mail.init_app(app)
 
+    # pylint: disable=import-outside-toplevel,cyclic-import
     from app.users.routes import users
     from app.posts.routes import posts
     from app.main.routes import main
