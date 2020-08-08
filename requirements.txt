@@ -8,5 +8,7 @@ flask_wtf
 gunicorn
 itsdangerous
 Pillow
+pylint-flask
+pylint-flask-sqlalchemy
 python-dotenv
 wtforms
