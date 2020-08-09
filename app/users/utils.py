@@ -14,6 +14,7 @@ def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     picture_name = random_hex + Path(form_picture.filename).suffix
     pictures_folder = Path(current_app.root_path).joinpath("static/profile_pics")
+    pictures_folder.mkdir(exist_ok=True, parents=True)
     picture_path = pictures_folder / picture_name
 
     output_size = (125, 125)

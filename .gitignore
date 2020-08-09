@@ -17,3 +17,5 @@ dist/
 
 .coverage
 htmlcov/
+
+**/profile_pics/
