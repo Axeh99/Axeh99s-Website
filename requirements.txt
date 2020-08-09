@@ -1,3 +1,4 @@
+black
 email_validator
 flask
 flask_bcrypt
@@ -8,6 +9,7 @@ flask_wtf
 gunicorn
 itsdangerous
 Pillow
+pylint
 pylint-flask
 pylint-flask-sqlalchemy
 python-dotenv
