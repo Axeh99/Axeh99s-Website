@@ -12,16 +12,17 @@ from app import mail
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
-    picture_path = random_hex + Path(form_picture.filename).suffix
+    picture_name = random_hex + Path(form_picture.filename).suffix
     pictures_folder = Path(current_app.root_path).joinpath("static/profile_pics")
-    picture_path = pictures_folder / picture_path
+    pictures_folder.mkdir(exist_ok=True, parents=True)
+    picture_path = pictures_folder / picture_name
 
     output_size = (125, 125)
     image = Image.open(form_picture)
     image.thumbnail(output_size)
     image.save(picture_path)
 
-    return picture_path
+    return picture_name
 
 
 def send_reset_email(user):
