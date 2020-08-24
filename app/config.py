@@ -1,8 +1,12 @@
+from logging import basicConfig
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
-load_dotenv()
+dotenv_path = Path(__file__).parent.with_name(".env").absolute()
+basicConfig(filename=dotenv_path.with_name("axeh99.log"))
+load_dotenv(dotenv_path)
 
 
 class Config:
