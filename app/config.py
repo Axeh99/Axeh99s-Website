@@ -1,8 +1,10 @@
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
-load_dotenv()
+dotenv_path = Path(__file__).parent.with_name(".env").absolute()
+load_dotenv(dotenv_path)
 
 
 class Config:
