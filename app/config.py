@@ -1,6 +1,8 @@
 from logging import basicConfig
 import os
 from pathlib import Path
+import sys
+from warnings import warn
 
 from dotenv import load_dotenv
 
@@ -21,3 +23,22 @@ class Config:
         "sqlite:///" + ROOT_PATH.joinpath("data.sqlite").as_posix()
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+def check_config():
+    if not Config.SQLALCHEMY_DATABASE_URI:
+        print("Error: SQLALCHEMY_DATABASE_URI not defined", file=sys.stderr)
+        sys.exit(1)
+
+    if not Config.SECRET_KEY:
+        print("Error: SECRET_KEY not defined", file=sys.stderr)
+        sys.exit(1)
+
+    if not Config.MAIL_USERNAME:
+        warn("Warning: MAIL_USER not defined")
+
+    if not Config.MAIL_PASSWORD:
+        warn("Warning: MAIL_PASS not defined")
+
+
+check_config()
