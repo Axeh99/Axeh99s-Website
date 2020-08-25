@@ -1,5 +1,6 @@
 """Common operations related to users."""
 
+import logging
 from pathlib import Path
 import secrets
 
@@ -8,6 +9,8 @@ from flask import current_app, url_for
 from flask_mail import Message
 
 from app import mail
+
+logger = logging.getLogger(__name__)
 
 
 def save_picture(form_picture):
@@ -29,7 +32,7 @@ def send_reset_email(user):
     token = user.get_reset_token()
     msg = Message(
         "Password Reset Request",
-        sender="elesmoquinado@gmail.com",
+        sender=("Axeh99's Blog", "axehmails@gmail.com"),
         recipients=[user.email],
     )
     message = (
@@ -41,3 +44,5 @@ def send_reset_email(user):
 
     msg.body = message
     mail.send(msg)
+
+    logger.debug("Sent reset email to %r", user.email)

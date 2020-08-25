@@ -1,3 +1,5 @@
+import logging
+
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
@@ -6,6 +8,7 @@ from app.models import Post
 from app.posts.forms import PostForm
 
 posts = Blueprint("posts", __name__)
+logger = logging.getLogger(__name__)
 
 
 @posts.route("/post/new", methods=["GET", "POST"])
@@ -18,6 +21,8 @@ def new_post():
         )
         db.session.add(post)
         db.session.commit()
+
+        logger.debug("Created post %r by %r", post.title, post.author.username)
         flash("Your post haas been created!", "success")
         return redirect(url_for("main.home"))
 
@@ -37,6 +42,11 @@ def get_post(post_id):
 def update_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
+        logger.debug(
+            "User %r tried unsuccessfully to edit post %d",
+            current_user.username,
+            post.id,
+        )
         abort(403)
 
     form = PostForm()
@@ -44,6 +54,8 @@ def update_post(post_id):
         post.title = form.title.data
         post.content = form.content.data
         db.session.commit()
+
+        logger.debug("User %r updated post %d", current_user.username, post.id)
         flash("Your post has been updated!", "success")
         return redirect(url_for("posts.get_post", post_id=post.id))
 
@@ -61,9 +73,16 @@ def update_post(post_id):
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
+        logger.debug(
+            "User %r tried unsuccessfully to delete post %d",
+            current_user.username,
+            post.id,
+        )
         abort(403)
 
     db.session.delete(post)
     db.session.commit()
+
+    logger.debug("User %r removed post %d", current_user.username, post.id)
     flash("Your post has been deleted!", "success")
     return redirect(url_for("main.home"))

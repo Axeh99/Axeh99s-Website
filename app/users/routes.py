@@ -1,3 +1,5 @@
+import logging
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
@@ -14,6 +16,7 @@ from .forms import (
 from .utils import save_picture, send_reset_email
 
 users = Blueprint("users", __name__)
+logger = logging.getLogger(__name__)
 
 
 @users.route("/register", methods=["GET", "POST"])
@@ -31,6 +34,7 @@ def register():
         )
         db.session.add(user)
         db.session.commit()
+        logger.debug("Registered user %r", user.username)
         flash("Your account has been created! You are now able to log in", "success")
         return redirect(url_for("main.home"))
 
@@ -106,6 +110,7 @@ def reset_request():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_email(user)
+        logger.debug("Sent reset email to %r", user.email)
         flash(
             "An email has been sent with instructions to reset your password.", "info"
         )
