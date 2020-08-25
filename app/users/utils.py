@@ -32,7 +32,7 @@ def send_reset_email(user):
     token = user.get_reset_token()
     msg = Message(
         "Password Reset Request",
-        sender="elesmoquinado@gmail.com",
+        sender=("Axeh99's Blog", "axehmails@gmail.com"),
         recipients=[user.email],
     )
     message = (
