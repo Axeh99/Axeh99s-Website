@@ -6,7 +6,7 @@
     {
       "label": "git clean",
       "type": "shell",
-      "command": "git clean -fdx -e .env -e .venv",
+      "command": "git clean -fdx -e .env -e .venv -e .env -e profile_pics",
       "problemMatcher": []
     },
     {
