@@ -34,6 +34,12 @@ def set_admin(username: str):
     db.session.commit()
 
 
+@users.cli.command("list")
+def list_users():
+    for user in User.query.all():
+        print(user)
+
+
 @users.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
