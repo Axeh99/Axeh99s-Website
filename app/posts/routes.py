@@ -41,7 +41,7 @@ def get_post(post_id):
 @login_required
 def update_post(post_id):
     post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
+    if post.author != current_user and not current_user.is_admin:
         logger.debug(
             "User %r tried unsuccessfully to edit post %d",
             current_user.username,
@@ -72,7 +72,7 @@ def update_post(post_id):
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
+    if post.author != current_user and not current_user.is_admin:
         logger.debug(
             "User %r tried unsuccessfully to delete post %d",
             current_user.username,
