@@ -40,6 +40,25 @@ def list_users():
         print(user)
 
 
+@users.cli.command("remove")
+@click.argument("username")
+def remove_username(username: str):
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        raise click.UsageError(f"No user named {username!r}")
+
+    if user.is_admin:
+        raise click.UsageError(f"User {username!r} is an admin")
+
+
+    # Remove posts too
+    for post in user.posts:
+        db.session.delete(post)
+
+    db.session.delete(user)
+    db.session.commit()
+
+
 @users.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
