@@ -68,7 +68,8 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
     def __repr__(self):
-        return f"User({self.username!r}, {self.email!r}, {self.image_file!r})"
+        usertype = "Admin" if self.is_admin else "NormalUser"
+        return f"{usertype}({self.username!r}, {self.email!r}, {self.image_file!r})"
 
 
 class Post(db.Model):
