@@ -1,5 +1,6 @@
 import logging
 
+import click
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
@@ -17,6 +18,20 @@ from .utils import save_picture, send_reset_email
 
 users = Blueprint("users", __name__)
 logger = logging.getLogger(__name__)
+
+
+@users.cli.command("set-admin")
+@click.argument("username")
+def set_admin(username: str):
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        raise click.UsageError(f"No user named {username!r}")
+
+    if user.is_admin:
+        raise click.UsageError(f"User {username!r} is already admin")
+
+    user.is_admin = True
+    db.session.commit()
 
 
 @users.route("/register", methods=["GET", "POST"])
