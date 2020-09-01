@@ -33,6 +33,19 @@ def set_admin(username: str):
     user.is_admin = True
     db.session.commit()
 
+@users.cli.command("unset-admin")
+@click.argument("username")
+def unset_admin(username: str):
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        raise click.UsageError(f"No user named {username!r}")
+
+    if not user.is_admin:
+        raise click.UsageError(f"User {username!r} is not an admin")
+
+    user.is_admin = False
+    db.session.commit()
+
 
 @users.cli.command("list")
 def list_users():
